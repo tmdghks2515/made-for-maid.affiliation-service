@@ -1,5 +1,6 @@
 package io.madeformaid.affiliation.domain.cafe.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.madeformaid.affiliation.domain.cafe.vo.enums.CafeConceptType
 import io.madeformaid.shared.jpa.converter.StringListConverter
 import io.madeformaid.shared.jpa.entity.BaseEntity
@@ -19,8 +20,11 @@ class CafeEntity(
         @ShortId
         var id: String? = null,
 
-        @Column(name = "name", nullable = false, length = 30)
+        @Column(name = "name", nullable = false, unique = true, length = 30)
         var name: String,
+
+        @Column(name = "contact_number", length = 20)
+        var contactNumber: String,
 
         @Column(name = "concept_types")
         @Convert(converter = ConceptTypeListConverter::class)
@@ -30,11 +34,19 @@ class CafeEntity(
         @Convert(converter = StringListConverter::class)
         val menuImageUrls: MutableList<String> = mutableListOf(),
 
+        @JsonIgnoreProperties(value = ["cafe"])
         @OneToMany(mappedBy = "cafe", cascade = [CascadeType.ALL], orphanRemoval = true)
         val snsLinks: MutableList<SnsLinkEntity> = mutableListOf()
 ) : BaseEntity() {
         protected constructor() : this(
                 id = null,
                 name = "",
+                contactNumber = "",
         )
+
+        fun addAssociations() {
+                snsLinks.forEach {
+                        it.cafe = this
+                }
+        }
 }

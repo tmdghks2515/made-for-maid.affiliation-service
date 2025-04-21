@@ -1,0 +1,32 @@
+### 카페 등록
+POST {{gatewayUrl}}/api/affiliation/cafe
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "메이드문",
+  "contactNumber": "010-1234-5678",
+  "cafeConceptTypes": ["MAID", "SCHOOL"],
+  "menuImageUrls": ["/images/1.jpg", "/images/2.jpg"],
+    "snsLinks": [
+        {
+          "snsType": "INSTAGRAM",
+          "linkType": "CAFE_LINK",
+          "linkUrl": "https://www.instagram.com/your_cafe",
+          "displayOrder": 0
+        },
+        {
+          "snsType": "X",
+          "linkType": "CAFE_LINK",
+          "linkUrl": "https://twitter.com/your_cafe",
+          "displayOrder": 1
+        }
+    ]
+}
+
+
+### 카페 자동완성
+GET {{gatewayUrl}}/api/affiliation/cafe/autocomplete?keyword=인차
+Accept: application/json
+Authorization: Bearer {{accessToken}}

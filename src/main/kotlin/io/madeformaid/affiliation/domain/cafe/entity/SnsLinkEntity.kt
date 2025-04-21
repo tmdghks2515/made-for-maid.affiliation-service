@@ -6,6 +6,8 @@ import io.madeformaid.shared.jpa.entity.BaseEntity
 import io.madeformaid.shared.jpa.idGenerator.ShortId
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
@@ -19,20 +21,19 @@ class SnsLinkEntity(
         @ShortId
         var id: String? = null,
 
-        @Column(name = "cafe_id")
-        val cafeId: String? = null,
-
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "cafe_id", insertable = false, updatable = false)
+        @JoinColumn(name = "cafe_id", updatable = false)
         var cafe: CafeEntity? = null,
 
         @Column(name = "staff_id")
         val staffId: String? = null,
 
-        @Column(name = "link_type", nullable = false)
+        @Enumerated(EnumType.STRING)
+        @Column(name = "link_type", nullable = false, columnDefinition = "varchar(100)")
         val linkType: SnsLinkType,
 
-        @Column(name = "sns_type", nullable = false)
+        @Enumerated(EnumType.STRING)
+        @Column(name = "sns_type", nullable = false, columnDefinition = "varchar(100)")
         var snsType: SnsType,
 
         @Column(name = "link_url", nullable = false, length = 1000)

@@ -10,11 +10,12 @@ class CafeMapper(
 ) {
     fun toEntity(dto: CafeDTO): CafeEntity {
         return CafeEntity(
-            id = dto.id,
-            name = dto.name,
-            cafeConceptTypes = dto.cafeConceptTypes.toMutableList(),
-            menuImageUrls = dto.menuImageUrls.toMutableList(),
-            snsLinks = dto.snsLinks.map { snsLinkMapper.toEntity(it) }.toMutableList(),
+                id = dto.id,
+                name = dto.name,
+                contactNumber = dto.contactNumber,
+                cafeConceptTypes = dto.cafeConceptTypes.toMutableList(),
+                menuImageUrls = dto.menuImageUrls.toMutableList(),
+                snsLinks = dto.snsLinks.map { snsLinkMapper.toEntity(it) }.toMutableList(),
         )
     }
 
@@ -22,6 +23,7 @@ class CafeMapper(
         return CafeDTO(
                 id = entity.id,
                 name = entity.name,
+                contactNumber = entity.contactNumber,
                 cafeConceptTypes = entity.cafeConceptTypes,
                 menuImageUrls = entity.menuImageUrls,
                 snsLinks = entity.snsLinks.map { snsLinkMapper.toDto(it) },

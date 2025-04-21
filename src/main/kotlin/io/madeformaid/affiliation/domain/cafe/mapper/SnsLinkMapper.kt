@@ -9,7 +9,6 @@ class SnsLinkMapper {
     fun toEntity(snsLinkDTO: SnsLinkDTO): SnsLinkEntity {
         return SnsLinkEntity(
             id = snsLinkDTO.id,
-            cafeId = snsLinkDTO.cafeId,
             staffId = snsLinkDTO.staffId,
             linkType = snsLinkDTO.linkType,
             snsType = snsLinkDTO.snsType,
@@ -21,7 +20,7 @@ class SnsLinkMapper {
     fun toDto(snsLinkEntity: SnsLinkEntity): SnsLinkDTO {
         return SnsLinkDTO(
             id = snsLinkEntity.id,
-            cafeId = snsLinkEntity.cafeId,
+            cafeId = snsLinkEntity.cafe?.id,
             staffId = snsLinkEntity.staffId,
             linkType = snsLinkEntity.linkType,
             snsType = snsLinkEntity.snsType,
