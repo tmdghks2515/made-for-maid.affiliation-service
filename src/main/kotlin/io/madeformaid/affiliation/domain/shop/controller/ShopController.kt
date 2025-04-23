@@ -1,7 +1,7 @@
-package io.madeformaid.affiliation.domain.cafe.controller
+package io.madeformaid.affiliation.domain.shop.controller
 
-import io.madeformaid.affiliation.domain.cafe.dto.data.CafeDTO
-import io.madeformaid.affiliation.domain.cafe.service.CafeService
+import io.madeformaid.affiliation.domain.shop.dto.data.ShopDTO
+import io.madeformaid.affiliation.domain.shop.service.ShopService
 import io.madeformaid.shared.dto.ValueLabelDTO
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/affiliation/cafe")
-class CafeController(
-        private val cafeService: CafeService,
+@RequestMapping("/api/affiliation/shop")
+class ShopController(
+    private val shopService: ShopService,
 ) {
     @PostMapping
-    fun createCafe(@RequestBody cafeDTO: CafeDTO): ResponseEntity<CafeDTO> {
-        return ResponseEntity.ok(cafeService.createCafe(cafeDTO))
+    fun createShop(@RequestBody shopDTO: ShopDTO): ResponseEntity<ShopDTO> {
+        return ResponseEntity.ok(shopService.createShop(shopDTO))
     }
 
     @GetMapping("/autocomplete")
     fun autoCompleteSearch(keyword: String): ResponseEntity<List<ValueLabelDTO>> {
-        return ResponseEntity.ok(cafeService.autoCompleteSearch(keyword))
+        return ResponseEntity.ok(shopService.autoCompleteSearch(keyword))
     }
 }

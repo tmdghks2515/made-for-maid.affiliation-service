@@ -1,13 +1,13 @@
-package io.madeformaid.affiliation.domain.cafe.dto.data
+package io.madeformaid.affiliation.domain.shop.dto.data
 
-import io.madeformaid.affiliation.domain.cafe.vo.enums.CafeConceptType
+import io.madeformaid.affiliation.domain.shop.vo.enums.ShopConceptType
 import java.time.LocalDateTime
 
-data class CafeDTO(
+data class ShopDTO(
         val id: String?,
         val name: String,
         val contactNumber: String,
-        val cafeConceptTypes: List<CafeConceptType>,
+        val shopConceptTypes: List<ShopConceptType>,
         val menuImageUrls: List<String>,
         val snsLinks: List<SnsLinkDTO>,
         val createdAt: LocalDateTime?,

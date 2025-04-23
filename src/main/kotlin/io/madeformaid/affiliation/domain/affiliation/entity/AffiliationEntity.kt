@@ -1,8 +1,8 @@
 package io.madeformaid.affiliation.domain.affiliation.entity
 
-import io.madeformaid.affiliation.domain.cafe.entity.CafeEntity
-import io.madeformaid.shared.jpa.entity.BaseEntity
-import io.madeformaid.shared.jpa.idGenerator.ShortId
+import io.madeformaid.affiliation.domain.shop.entity.ShopEntity
+import io.madeformaid.webmvc.jpa.entity.BaseEntity
+import io.madeformaid.webmvc.jpa.idGenerator.ShortId
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -13,12 +13,12 @@ class AffiliationEntity(
         @ShortId
         var id: String? = null,
 
-        @Column(name = "cafe_id", nullable = false)
-        val cafeId: String,
+        @Column(name = "shop_id", nullable = false)
+        val shopId: String,
 
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "cafe_id", insertable = false, updatable = false)
-        var cafe: CafeEntity? = null,
+        @JoinColumn(name = "shop_id", insertable = false, updatable = false)
+        var shop: ShopEntity? = null,
 
         @Column(name = "payment_id", nullable = false)
         val paymentId: String,
@@ -32,8 +32,8 @@ class AffiliationEntity(
     protected constructor() : this(
             id = null,
             paymentId = "",
-            cafeId = "",
-            cafe = null,
+            shopId = "",
+            shop = null,
             startAt = LocalDateTime.now(),
             expiryAt = LocalDateTime.now()
     )

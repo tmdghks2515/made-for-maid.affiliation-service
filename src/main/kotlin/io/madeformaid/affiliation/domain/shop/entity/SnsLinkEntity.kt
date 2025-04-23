@@ -1,9 +1,9 @@
-package io.madeformaid.affiliation.domain.cafe.entity
+package io.madeformaid.affiliation.domain.shop.entity
 
-import io.madeformaid.affiliation.domain.cafe.vo.enums.SnsType
-import io.madeformaid.affiliation.domain.cafe.vo.enums.SnsLinkType
-import io.madeformaid.shared.jpa.entity.BaseEntity
-import io.madeformaid.shared.jpa.idGenerator.ShortId
+import io.madeformaid.affiliation.domain.shop.vo.enums.SnsType
+import io.madeformaid.affiliation.domain.shop.vo.enums.SnsLinkType
+import io.madeformaid.webmvc.jpa.entity.BaseEntity
+import io.madeformaid.webmvc.jpa.idGenerator.ShortId
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -22,8 +22,8 @@ class SnsLinkEntity(
         var id: String? = null,
 
         @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "cafe_id", updatable = false)
-        var cafe: CafeEntity? = null,
+        @JoinColumn(name = "shop_id", updatable = false)
+        var shop: ShopEntity? = null,
 
         @Column(name = "staff_id")
         val staffId: String? = null,
@@ -43,7 +43,7 @@ class SnsLinkEntity(
         var displayOrder: Int = 0,
 ) : BaseEntity() {
         protected constructor() : this(
-            linkType = SnsLinkType.CAFE_LINK,
+            linkType = SnsLinkType.SHOP_LINK,
             snsType = SnsType.INSTAGRAM,
             linkUrl = "",
     )

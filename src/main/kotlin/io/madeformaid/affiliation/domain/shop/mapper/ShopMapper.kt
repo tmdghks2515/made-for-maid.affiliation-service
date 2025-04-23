@@ -1,30 +1,30 @@
-package io.madeformaid.affiliation.domain.cafe.mapper
+package io.madeformaid.affiliation.domain.shop.mapper
 
-import io.madeformaid.affiliation.domain.cafe.dto.data.CafeDTO
-import io.madeformaid.affiliation.domain.cafe.entity.CafeEntity
+import io.madeformaid.affiliation.domain.shop.dto.data.ShopDTO
+import io.madeformaid.affiliation.domain.shop.entity.ShopEntity
 import org.springframework.stereotype.Component
 
 @Component
-class CafeMapper(
+class ShopMapper(
         private val snsLinkMapper: SnsLinkMapper
 ) {
-    fun toEntity(dto: CafeDTO): CafeEntity {
-        return CafeEntity(
+    fun toEntity(dto: ShopDTO): ShopEntity {
+        return ShopEntity(
                 id = dto.id,
                 name = dto.name,
                 contactNumber = dto.contactNumber,
-                cafeConceptTypes = dto.cafeConceptTypes.toMutableList(),
+                shopConceptTypes = dto.shopConceptTypes.toMutableList(),
                 menuImageUrls = dto.menuImageUrls.toMutableList(),
                 snsLinks = dto.snsLinks.map { snsLinkMapper.toEntity(it) }.toMutableList(),
         )
     }
 
-    fun toDTO(entity: CafeEntity): CafeDTO {
-        return CafeDTO(
+    fun toDTO(entity: ShopEntity): ShopDTO {
+        return ShopDTO(
                 id = entity.id,
                 name = entity.name,
                 contactNumber = entity.contactNumber,
-                cafeConceptTypes = entity.cafeConceptTypes,
+                shopConceptTypes = entity.shopConceptTypes,
                 menuImageUrls = entity.menuImageUrls,
                 snsLinks = entity.snsLinks.map { snsLinkMapper.toDto(it) },
                 createdAt = entity.createdAt

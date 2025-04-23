@@ -1,7 +1,7 @@
-package io.madeformaid.affiliation.domain.cafe.mapper
+package io.madeformaid.affiliation.domain.shop.mapper
 
-import io.madeformaid.affiliation.domain.cafe.dto.data.SnsLinkDTO
-import io.madeformaid.affiliation.domain.cafe.entity.SnsLinkEntity
+import io.madeformaid.affiliation.domain.shop.dto.data.SnsLinkDTO
+import io.madeformaid.affiliation.domain.shop.entity.SnsLinkEntity
 import org.springframework.stereotype.Component
 
 @Component
@@ -20,7 +20,7 @@ class SnsLinkMapper {
     fun toDto(snsLinkEntity: SnsLinkEntity): SnsLinkDTO {
         return SnsLinkDTO(
             id = snsLinkEntity.id,
-            cafeId = snsLinkEntity.cafe?.id,
+            shopId = snsLinkEntity.shop?.id,
             staffId = snsLinkEntity.staffId,
             linkType = snsLinkEntity.linkType,
             snsType = snsLinkEntity.snsType,

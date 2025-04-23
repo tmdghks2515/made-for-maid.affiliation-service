@@ -1,8 +1,8 @@
-package io.madeformaid.affiliation.domain.cafe.vo.enums
+package io.madeformaid.affiliation.domain.shop.vo.enums
 
 import io.madeformaid.shared.vo.enums.DescribableEnum
 
-enum class CafeConceptType(
+enum class ShopConceptType(
         private val displayName: String,
 ) : DescribableEnum {
     MAID("메이드"),

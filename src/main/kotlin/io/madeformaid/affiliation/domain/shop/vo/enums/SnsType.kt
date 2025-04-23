@@ -1,4 +1,4 @@
-package io.madeformaid.affiliation.domain.cafe.vo.enums
+package io.madeformaid.affiliation.domain.shop.vo.enums
 
 import io.madeformaid.shared.vo.enums.DescribableEnum
 
