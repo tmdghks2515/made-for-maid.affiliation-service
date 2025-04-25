@@ -13,7 +13,7 @@ class ShopMapper(
                 id = dto.id,
                 name = dto.name,
                 contactNumber = dto.contactNumber,
-                shopConceptTypes = dto.shopConceptTypes.toMutableList(),
+                shopConcepts = dto.shopConcepts.toMutableList(),
                 menuImageUrls = dto.menuImageUrls.toMutableList(),
                 snsLinks = dto.snsLinks.map { snsLinkMapper.toEntity(it) }.toMutableList(),
         )
@@ -24,7 +24,7 @@ class ShopMapper(
                 id = entity.id,
                 name = entity.name,
                 contactNumber = entity.contactNumber,
-                shopConceptTypes = entity.shopConceptTypes,
+                shopConcepts = entity.shopConcepts,
                 menuImageUrls = entity.menuImageUrls,
                 snsLinks = entity.snsLinks.map { snsLinkMapper.toDto(it) },
                 createdAt = entity.createdAt

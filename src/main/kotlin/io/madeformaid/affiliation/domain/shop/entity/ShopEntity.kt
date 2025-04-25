@@ -1,7 +1,7 @@
 package io.madeformaid.affiliation.domain.shop.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import io.madeformaid.affiliation.domain.shop.vo.enums.ShopConceptType
+import io.madeformaid.affiliation.domain.shop.vo.enums.ShopConcept
 import io.madeformaid.webmvc.jpa.converter.StringListConverter
 import io.madeformaid.webmvc.jpa.entity.BaseEntity
 import io.madeformaid.webmvc.jpa.idGenerator.ShortId
@@ -26,9 +26,9 @@ class ShopEntity(
         @Column(name = "contact_number", length = 20)
         var contactNumber: String,
 
-        @Column(name = "shop_concept_types")
-        @Convert(converter = ShopConceptTypeListConverter::class)
-        val shopConceptTypes: MutableList<ShopConceptType> = mutableListOf(),
+        @Column(name = "shop_concepts")
+        @Convert(converter = ShopConceptListConverter::class)
+        val shopConcepts: MutableList<ShopConcept> = mutableListOf(),
 
         @Column(name = "menu_image_urls", length = 1000)
         @Convert(converter = StringListConverter::class)

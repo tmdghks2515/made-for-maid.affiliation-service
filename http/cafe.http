@@ -7,7 +7,7 @@ Authorization: Bearer {{accessToken}}
 {
   "name": "메이드문",
   "contactNumber": "010-1234-5678",
-  "shopConceptTypes": ["MAID", "SCHOOL"],
+  "shopConcepts": ["MAID", "SCHOOL"],
   "menuImageUrls": ["/images/1.jpg", "/images/2.jpg"],
     "snsLinks": [
         {
