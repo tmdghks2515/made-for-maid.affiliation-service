@@ -7,7 +7,9 @@ enum class SnsType(
 ) : DescribableEnum {
     INSTAGRAM("인스타그램"),
     X("엑스(트위터)"),
-    NAVER_CAFE("네이버 카페"),
+    NAVER("네이버"),
+    YOUTUBE("유튜브"),
+    TIKTOK("틱톡"),
     ;
 
     override fun getDisplayName(): String = displayName
