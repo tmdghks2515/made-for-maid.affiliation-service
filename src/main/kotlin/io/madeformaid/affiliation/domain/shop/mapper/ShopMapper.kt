@@ -14,8 +14,12 @@ class ShopMapper(
                 name = dto.name,
                 contactNumber = dto.contactNumber,
                 shopConcepts = dto.shopConcepts.toMutableList(),
-                menuImageUrls = dto.menuImageUrls.toMutableList(),
-                snsLinks = dto.snsLinks.map { snsLinkMapper.toEntity(it) }.toMutableList(),
+                menuImageUrls = dto.menuImageUrls
+                    .filter { it.isNotBlank() }
+                    .toMutableList(),
+                snsLinks = dto.snsLinks
+                    .filter { it.linkUrl.isNotBlank() }
+                    .map { snsLinkMapper.toEntity(it) }.toMutableList(),
         )
     }
 
