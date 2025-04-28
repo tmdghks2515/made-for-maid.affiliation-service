@@ -52,6 +52,7 @@ dependencies {
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.grpc:spring-grpc-server-web-spring-boot-starter'
+	implementation "io.grpc:grpc-kotlin-stub:1.4.1"
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'com.auth0:java-jwt:4.4.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

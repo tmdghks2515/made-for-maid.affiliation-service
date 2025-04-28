@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface ShopRepository : JpaRepository<ShopEntity, String> {
     fun findByNameLike(name: String): List<ShopEntity>
     fun existsByName(name: String): Boolean
+    fun findByIdIn(ids: List<String>): List<ShopEntity>
 }
