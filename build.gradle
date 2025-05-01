@@ -18,7 +18,6 @@ java {
 
 repositories {
 	mavenCentral()
-	mavenLocal()
 	maven {
 		name = "GitHubPackages"
 		url = uri("https://maven.pkg.github.com/tmdghks2515/made-for-maid.shared-lib")
@@ -35,6 +34,14 @@ repositories {
 			password = project.findProperty("gpr.key")
 		}
 	}
+	maven {
+		name = "GitHubPackages"
+		url = uri("https://maven.pkg.github.com/tmdghks2515/made-for-maid.proto-files")
+		credentials {
+			username = project.findProperty("gpr.user")
+			password = project.findProperty("gpr.key")
+		}
+	}
 }
 
 ext {
@@ -42,9 +49,17 @@ ext {
 	set('springGrpcVersion', "0.7.0")
 }
 
+configurations {
+	protoFiles {
+		canBeResolved = true
+		canBeConsumed = false
+	}
+}
+
 dependencies {
 	implementation 'io.madeformaid:shared-lib:0.0.1-SNAPSHOT'
 	implementation 'io.madeformaid:webmvc-lib:0.0.1-SNAPSHOT'
+	protoFiles  'io.madeformaid:proto-files:0.0.1-SNAPSHOT'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
@@ -53,6 +68,9 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'org.springframework.grpc:spring-grpc-server-web-spring-boot-starter'
 	implementation "io.grpc:grpc-kotlin-stub:1.4.1"
+	implementation 'io.grpc:grpc-protobuf:1.62.2'
+	implementation 'io.grpc:grpc-stub:1.62.2'
+	implementation "com.google.protobuf:protobuf-kotlin:3.25.2"
 	runtimeOnly 'org.postgresql:postgresql'
 	implementation 'com.auth0:java-jwt:4.4.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -77,24 +95,39 @@ kotlin {
 	}
 }
 
+/* grpc proto 파일 생성 설정 START */
+// 📦 proto JAR 추출 경로 설정
+def extractedProtoDir = layout.buildDirectory.dir("proto-extracted").get().asFile
+
+// 📥 proto JAR에서 .proto만 추출
+tasks.register('extractProtoFiles', Copy) {
+	from { configurations.protoFiles.collect { zipTree(it) } }
+	include '**/*.proto'
+	into extractedProtoDir
+}
+
+// 📁 sourceSets에 proto 설정 (generateProto 전에 등록돼야 함)
+sourceSets.main.proto.srcDir extractedProtoDir
+
+// 🧩 의존성 연결
+tasks.named('generateProto') { dependsOn 'extractProtoFiles' }
+tasks.named('processResources') { dependsOn 'extractProtoFiles' }
+
+// ⚙️ protobuf stub 생성 설정
 protobuf {
-	protoc {
-		artifact = 'com.google.protobuf:protoc'
-	}
+	protoc { artifact = "com.google.protobuf:protoc:3.25.2" }
 	plugins {
-		grpc {
-			artifact = 'io.grpc:protoc-gen-grpc-java'
-		}
+		grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.62.2" }
+		grpckt { artifact = "io.grpc:protoc-gen-grpc-kotlin:1.4.1:jdk8@jar" }
 	}
 	generateProtoTasks {
-		all()*.plugins {
-			grpc {
-				option 'jakarta_omit'
-				option '@generated=omit'
-			}
+		all().each { task ->
+			task.builtins { java {}; kotlin {} }
+			task.plugins { grpc {}; grpckt {} }
 		}
 	}
 }
+/* grpc proto 파일 생성 설정 END */
 
 allOpen {
 	annotation 'jakarta.persistence.Entity'
