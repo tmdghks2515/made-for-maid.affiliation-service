@@ -30,7 +30,7 @@ class ShopEntity(
         @Convert(converter = ShopConceptListConverter::class)
         val shopConcepts: MutableList<ShopConcept> = mutableListOf(),
 
-        @Column(name = "menu_image_urls", length = 1000)
+        @Column(name = "menu_image_urls", columnDefinition = "TEXT")
         @Convert(converter = StringListConverter::class)
         val menuImageUrls: MutableList<String> = mutableListOf(),
 
