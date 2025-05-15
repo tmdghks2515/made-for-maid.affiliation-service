@@ -4,23 +4,30 @@ import io.madeformaid.affiliation.domain.shop.dto.data.ShopDTO
 import io.madeformaid.affiliation.domain.shop.entity.ShopEntity
 import org.springframework.stereotype.Component
 
-@Component
-class ShopMapper(
-        private val snsLinkMapper: SnsLinkMapper
-) {
+object ShopMapper {
     fun toEntity(dto: ShopDTO): ShopEntity {
-        return ShopEntity(
+        val shopEntity = ShopEntity(
                 id = dto.id,
                 name = dto.name,
                 contactNumber = dto.contactNumber,
                 shopConcepts = dto.shopConcepts.toMutableList(),
-                menuImageUrls = dto.menuImageUrls
-                    .filter { it.isNotBlank() }
-                    .toMutableList(),
-                snsLinks = dto.snsLinks
-                    .filter { it.linkUrl.isNotBlank() }
-                    .map { snsLinkMapper.toEntity(it) }.toMutableList(),
         )
+
+        shopEntity.snsLinks.addAll(
+            dto.snsLinks
+                .filter { it.linkUrl.isNotBlank() }
+                .map { SnsLinkMapper.toEntity(it, shopEntity) }
+                .toMutableList()
+        )
+
+        shopEntity.menuImages.addAll(
+            dto.menuImages
+                .filter { it.imageUrl.isNotBlank() && it.imageId.isNotBlank() }
+                .map { ShopMenuImageMapper.toEntity(it, shopEntity) }
+                .toMutableList()
+        )
+
+        return shopEntity
     }
 
     fun toDTO(entity: ShopEntity): ShopDTO {
@@ -29,8 +36,8 @@ class ShopMapper(
                 name = entity.name,
                 contactNumber = entity.contactNumber,
                 shopConcepts = entity.shopConcepts,
-                menuImageUrls = entity.menuImageUrls,
-                snsLinks = entity.snsLinks.map { snsLinkMapper.toDto(it) },
+                menuImages = entity.menuImages.map { ShopMenuImageMapper.toDTO(it) },
+                snsLinks = entity.snsLinks.map { SnsLinkMapper.toDTO(it) },
                 createdAt = entity.createdAt
         )
     }

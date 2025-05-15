@@ -8,7 +8,7 @@ data class ShopDTO(
         val name: String,
         val contactNumber: String,
         val shopConcepts: List<ShopConcept>,
-        val menuImageUrls: List<String>,
+        val menuImages: List<ShopMenuImageDTO>,
         val snsLinks: List<SnsLinkDTO>,
         val createdAt: LocalDateTime?,
 )

@@ -1,12 +1,11 @@
 package io.madeformaid.affiliation.domain.shop.mapper
 
 import io.madeformaid.affiliation.domain.shop.dto.data.SnsLinkDTO
+import io.madeformaid.affiliation.domain.shop.entity.ShopEntity
 import io.madeformaid.affiliation.domain.shop.entity.SnsLinkEntity
-import org.springframework.stereotype.Component
 
-@Component
-class SnsLinkMapper {
-    fun toEntity(snsLinkDTO: SnsLinkDTO): SnsLinkEntity {
+object SnsLinkMapper {
+    fun toEntity(snsLinkDTO: SnsLinkDTO, shop: ShopEntity): SnsLinkEntity {
         return SnsLinkEntity(
             id = snsLinkDTO.id,
             staffId = snsLinkDTO.staffId,
@@ -14,10 +13,11 @@ class SnsLinkMapper {
             snsType = snsLinkDTO.snsType,
             linkUrl = snsLinkDTO.linkUrl,
             displayOrder = snsLinkDTO.displayOrder,
+            shop = shop
         )
     }
 
-    fun toDto(snsLinkEntity: SnsLinkEntity): SnsLinkDTO {
+    fun toDTO(snsLinkEntity: SnsLinkEntity): SnsLinkDTO {
         return SnsLinkDTO(
             id = snsLinkEntity.id,
             shopId = snsLinkEntity.shop?.id,

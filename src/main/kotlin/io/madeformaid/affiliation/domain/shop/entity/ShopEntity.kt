@@ -6,10 +6,16 @@ import io.madeformaid.webmvc.jpa.converter.StringListConverter
 import io.madeformaid.webmvc.jpa.entity.BaseEntity
 import io.madeformaid.webmvc.jpa.idGenerator.ShortId
 import jakarta.persistence.CascadeType
+import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
 import jakarta.persistence.Convert
+import jakarta.persistence.ElementCollection
 import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 
@@ -26,27 +32,26 @@ class ShopEntity(
         @Column(name = "contact_number", length = 20)
         var contactNumber: String,
 
-        @Column(name = "shop_concepts")
-        @Convert(converter = ShopConceptListConverter::class)
-        val shopConcepts: MutableList<ShopConcept> = mutableListOf(),
+        @ElementCollection(fetch = FetchType.LAZY)
+        @CollectionTable(
+                name = "shop_concept",
+                joinColumns = [JoinColumn(name = "shop_id")]
+        )
+        @Enumerated(EnumType.STRING)
+        @Column(name = "shop_concept", columnDefinition = "varchar(100)")
+        var shopConcepts: MutableList<ShopConcept> = mutableListOf(),
 
-        @Column(name = "menu_image_urls", columnDefinition = "TEXT")
-        @Convert(converter = StringListConverter::class)
-        val menuImageUrls: MutableList<String> = mutableListOf(),
+        @Column(name = "menu_image_urls")
+        @OneToMany(mappedBy = "shop")
+        val menuImages: MutableList<ShopMenuImageEntity> = mutableListOf(),
 
         @JsonIgnoreProperties(value = ["shop"])
         @OneToMany(mappedBy = "shop", cascade = [CascadeType.ALL], orphanRemoval = true)
         val snsLinks: MutableList<SnsLinkEntity> = mutableListOf()
 ) : BaseEntity() {
-        protected constructor() : this(
+        constructor() : this(
                 id = null,
                 name = "",
                 contactNumber = "",
         )
-
-        fun addAssociations() {
-                snsLinks.forEach {
-                        it.shop = this
-                }
-        }
 }
