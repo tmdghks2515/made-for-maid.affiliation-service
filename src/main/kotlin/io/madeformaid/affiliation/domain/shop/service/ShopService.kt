@@ -6,9 +6,11 @@ import event.ImageEvent.ImageUsingEvents
 import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopConceptsCommand
 import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopMenuImagesCommand
 import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopNameCommand
+import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopSnsLinksCommand
 import io.madeformaid.affiliation.domain.shop.dto.data.ShopDTO
 import io.madeformaid.affiliation.domain.shop.mapper.ShopMapper
 import io.madeformaid.affiliation.domain.shop.mapper.ShopMenuImageMapper
+import io.madeformaid.affiliation.domain.shop.mapper.SnsLinkMapper
 import io.madeformaid.affiliation.domain.shop.repository.ShopRepository
 import io.madeformaid.affiliation.global.event.publisher.ImageEventPublisher
 import org.springframework.stereotype.Service
@@ -138,6 +140,25 @@ class ShopService(
             )
         }
 
+        return ShopMapper.toDTO(updatedShopEntity)
+    }
+
+    fun updateShopSnsLinks(command: UpdateShopSnsLinksCommand): ShopDTO {
+        val shop = shopRepository.findById(command.shopId)
+            .orElseThrow { IllegalArgumentException("Shop with ID ${command.shopId} not found") }
+
+        shop.snsLinks.clear()
+
+        command.newSnsLinks.takeIf {  it.isNotEmpty() }?.let { newSnsLinks ->
+            newSnsLinks.forEach { newSnsLink ->
+                shop.snsLinks.add(
+                    SnsLinkMapper.toEntity(newSnsLink, shop)
+                )
+            }
+        }
+
+        val updatedShopEntity = shopRepository.save(shop)
+        
         return ShopMapper.toDTO(updatedShopEntity)
     }
 }

@@ -42,7 +42,7 @@ class ShopEntity(
         var shopConcepts: MutableList<ShopConcept> = mutableListOf(),
 
         @Column(name = "menu_image_urls")
-        @OneToMany(mappedBy = "shop")
+        @OneToMany(mappedBy = "shop", cascade = [CascadeType.ALL], orphanRemoval = true)
         val menuImages: MutableList<ShopMenuImageEntity> = mutableListOf(),
 
         @JsonIgnoreProperties(value = ["shop"])

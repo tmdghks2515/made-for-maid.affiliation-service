@@ -1,6 +1,7 @@
 package io.madeformaid.affiliation.domain.shop.dto.command
 
 import io.madeformaid.affiliation.domain.shop.dto.data.ShopMenuImageDTO
+import io.madeformaid.affiliation.domain.shop.dto.data.SnsLinkDTO
 import io.madeformaid.affiliation.domain.shop.vo.enums.ShopConcept
 
 data class UpdateShopNameCommand(
@@ -10,10 +11,15 @@ data class UpdateShopNameCommand(
 
 data class UpdateShopMenuImagesCommand(
     val shopId: String,
-    val newMenus: List<ShopMenuImageDTO>,
+    val newMenuImages: List<ShopMenuImageDTO>,
 )
 
 data class UpdateShopConceptsCommand(
     val shopId: String,
     val newShopConcepts: Set<ShopConcept>,
+)
+
+data class UpdateShopSnsLinksCommand(
+    val shopId: String,
+    val newSnsLinks: List<SnsLinkDTO>,
 )

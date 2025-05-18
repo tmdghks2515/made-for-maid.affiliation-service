@@ -3,6 +3,7 @@ package io.madeformaid.affiliation.domain.shop.controller
 import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopConceptsCommand
 import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopMenuImagesCommand
 import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopNameCommand
+import io.madeformaid.affiliation.domain.shop.dto.command.UpdateShopSnsLinksCommand
 import io.madeformaid.affiliation.domain.shop.dto.data.ShopDTO
 import io.madeformaid.affiliation.domain.shop.service.ShopQueryService
 import io.madeformaid.affiliation.domain.shop.service.ShopService
@@ -45,6 +46,11 @@ class ShopController(
     @PutMapping("/update/menu-images")
     fun updateShopMenuImages(@RequestBody command: UpdateShopMenuImagesCommand): ResponseEntity<ShopDTO> {
         return ResponseEntity.ok(shopService.updateMenuImages(command))
+    }
+
+    @PutMapping("/update/sns-links")
+    fun updateShopSnsLinks(@RequestBody command: UpdateShopSnsLinksCommand): ResponseEntity<ShopDTO> {
+        return ResponseEntity.ok(shopService.updateShopSnsLinks(command))
     }
 
     @GetMapping
